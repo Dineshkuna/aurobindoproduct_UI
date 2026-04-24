@@ -1,5 +1,10 @@
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
+// import ButtonAppBar from "@/components/Header";
+import Link from "next/link";
+import Head from "next/head";
+
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,66 +18,316 @@ const geistMono = Geist_Mono({
 
 export default function Home() {
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black`}
-    >
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the index.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <Head>
+        <title>Admin Dashboard | Aurobindo Pharma</title>
+      </Head>
+
+      <div className="admin-layout">
+        <nav className="navbar">
+          <div className="navbar-brand">
+            <h2>🔒 Admin Panel</h2>
+          </div>
+          <div className="navbar-user">
+            {/* <span>👤 {admin?.name}</span> */}
+            <span>👤 John Doe</span>
+            {/* <button onClick={handleLogout} className="btn-logout">Logout</button> */}
+            <button  className="btn-logout">Logout</button>
+          </div>
+        </nav>
+
+        <div className="admin-container">
+          <aside className="sidebar">
+            <ul className="nav-menu">
+              <li><Link href="/">📊 Dashboard</Link></li>
+              <li><Link href="/products">📦 Products</Link></li>
+              <li><Link href="/admins">👥 Admins</Link></li>
+              <li><Link href="/analytics">📈 Analytics</Link></li>
+            </ul>
+          </aside>
+
+          <main className="content">
+            <h1>Dashboard</h1>
+
+            {/* {error && <div className="alert alert-danger">{error}</div>} */}
+
+            <div className="stats-grid">
+              <div className="stat-card">
+                {/* <div className="stat-number">{stats?.totalProducts || 0}</div> */}
+                <div className="stat-label">Total Products</div>
+              </div>
+              <div className="stat-card">
+                {/* <div className="stat-number">{stats?.totalAdmins || 0}</div> */}
+                <div className="stat-label">Total Admins</div>
+              </div>
+              <div className="stat-card">
+                {/* <div className="stat-number">{stats?.superAdmins || 0}</div> */}
+                <div className="stat-label">Super Admins</div>
+              </div>
+              <div className="stat-card">
+                {/* <div className="stat-number">{stats?.regularAdmins || 0}</div> */}
+                <div className="stat-label">Regular Admins</div>
+              </div>
+            </div>
+
+            <div className="content-grid">
+              {/* <section className="card">
+                <h3>Recent Products</h3>
+                {stats?.recentProducts?.length > 0 ? (
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Product Name</th>
+                        <th>Item Code</th>
+                        <th>Market</th>
+                        <th>Created By</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {stats.recentProducts.map(product => (
+                        <tr key={product._id}>
+                          <td>{product.productName}</td>
+                          <td>{product.itemCode}</td>
+                          <td>{product.market}</td>
+                          <td>{product.createdBy?.name}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No products yet</p>
+                )}
+              </section> */}
+
+              {/* <section className="card">
+                <h3>Recent Admins</h3>
+                {stats?.recentAdmins?.length > 0 ? (
+                  <ul className="admin-list">
+                    {stats.recentAdmins.map(adm => (
+                      <li key={adm._id}>
+                        {adm.name} ({adm.role}) - {adm.email}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No admins yet</p>
+                )}
+              </section> */}
+            </div>
+          </main>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs/pages/getting-started?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+
+      <style jsx>{`
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: #f5f5f5;
+        }
+
+        .admin-layout {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+
+        .navbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: linear-gradient(135deg, #017eb6 0%, #0a5a8c 100%);
+          color: white;
+          padding: 20px 30px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand h2 {
+          font-size: 24px;
+        }
+
+        .navbar-user {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .btn-logout {
+          background: #ff6b6b;
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 14px;
+        }
+
+        .btn-logout:hover {
+          background: #ff5252;
+        }
+
+        .admin-container {
+          display: flex;
+          flex: 1;
+        }
+
+        .sidebar {
+          width: 250px;
+          background:#524f4f45;
+          padding: 20px;
+          box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-menu {
+          list-style: none;
+        }
+
+        .nav-menu li {
+          margin-bottom: 15px;
+        }
+
+        .nav-menu a {
+          display: block;
+          padding: 12px;
+          color: #333;
+          text-decoration: none;
+          border-radius: 4px;
+          transition: all 0.3s;
+        }
+
+        .nav-menu a:hover {
+          background: #f0f0f0;
+          color: #017eb6;
+        }
+
+        .content {
+          flex: 1;
+          padding: 30px;
+          background: #b1b1b1e3;
+        }
+
+        .content h1 {
+          color: #333;
+          margin-bottom: 25px;
+        }
+
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+          margin-bottom: 30px;
+        }
+
+        .stat-card {
+          background: white;
+          padding: 25px;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+          text-align: center;
+          transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+          font-size: 36px;
+          font-weight: bold;
+          color: #017eb6;
+          margin-bottom: 10px;
+        }
+
+        .stat-label {
+          color: #666;
+          font-size: 14px;
+        }
+
+        .content-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+
+        .card {
+          background: white;
+          padding: 25px;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h3 {
+          color: #333;
+          margin-bottom: 20px;
+          padding-bottom: 10px;
+          border-bottom: 2px solid #017eb6;
+        }
+
+        .table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 14px;
+        }
+
+        .table th {
+          background: #f5f5f5;
+          padding: 12px;
+          text-align: left;
+          font-weight: 600;
+          color: #333;
+        }
+
+        .table td {
+          padding: 12px;
+          border-bottom: 1px solid #eee;
+        }
+
+        .table tr:hover {
+          background: #f9f9f9;
+        }
+
+        .admin-list {
+          list-style: none;
+        }
+
+        .admin-list li {
+          padding: 12px;
+          border-bottom: 1px solid #eee;
+          color: #666;
+          font-size: 14px;
+        }
+
+        .alert {
+          padding: 15px;
+          border-radius: 4px;
+          margin-bottom: 20px;
+        }
+
+        .alert-danger {
+          background: #ffe0e0;
+          color: #d23c3c;
+          border: 1px solid #ff9999;
+        }
+
+        @media (max-width: 768px) {
+          .sidebar {
+            width: 100%;
+          }
+
+          .admin-container {
+            flex-direction: column;
+          }
+
+          .content-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
+    </>
   );
 }

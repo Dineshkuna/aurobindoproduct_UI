@@ -4,9 +4,9 @@ import User from '../models/user.model.js';
 
 export const createPharma = async (req, res, next) => {
 
-    const { productName, itemCode, strength, gtin, market, dosageForm } = req.body;
+    const { productName, itemCode, strength, gtin, market, dosageForm, packInsertUrl } = req.body;
     const userId = req.userId;
-    const user = await User.findById(userId);
+    const user = userId ? await User.findById(userId) : null;
     
     try {
         let pharma = new Pharma({
@@ -16,12 +16,13 @@ export const createPharma = async (req, res, next) => {
             gtin,
             market,
             dosageForm,
-            user : {id: userId, name: user.name}
+            packInsertUrl,
+            user : user ? {id: userId, name: user.name} : undefined
         });
 
         await pharma.save();
 
-        res.status(200).json({success: true, message: "Pharma created successfully",})
+        res.status(200).json({success: true, message: "Pharma created successfully", data: pharma})
     }catch (error) {
         res.status(500).json({success : false, message: "Failed to create pharma", error: error.message})
 
