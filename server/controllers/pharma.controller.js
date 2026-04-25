@@ -3,12 +3,11 @@ import User from '../models/user.model.js';
 
 
 export const createPharma = async (req, res, next) => {
-
-    const { productName, itemCode, strength, gtin, market, dosageForm, packInsertUrl } = req.body;
-    const userId = req.userId;
-    const user = userId ? await User.findById(userId) : null;
-    
     try {
+        const { productName, itemCode, strength, gtin, market, dosageForm, packInsertUrl } = req.body;
+        const userId = req.userId;
+        const user = userId ? await User.findById(userId) : null;
+
         let pharma = new Pharma({
             productName,
             itemCode,
@@ -24,6 +23,22 @@ export const createPharma = async (req, res, next) => {
 
         res.status(200).json({success: true, message: "Pharma created successfully", data: pharma})
     }catch (error) {
+        if (error.code === 11000) {
+            return res.status(409).json({
+                success: false,
+                message: "Item code already exists",
+                error: error.message
+            });
+        }
+
+        if (error.name === "ValidationError") {
+            return res.status(400).json({
+                success: false,
+                message: "Please fill all required product fields",
+                error: error.message
+            });
+        }
+
         res.status(500).json({success : false, message: "Failed to create pharma", error: error.message})
 
     }

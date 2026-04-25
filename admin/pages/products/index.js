@@ -82,7 +82,7 @@ function ProductPage() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message || 'Failed to save product');
+        throw new Error(result.error || result.message || 'Failed to save product');
       }
 
       if (editingId) {
@@ -138,7 +138,7 @@ function ProductPage() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message || 'Failed to delete product');
+        throw new Error(result.error || result.message || 'Failed to delete product');
       }
 
       setProducts((previousProducts) =>
