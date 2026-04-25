@@ -13,11 +13,34 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 
-app.use(cors({
-    origin: ['http://localhost:3000'],
+// CORS configuration - allows both local and production URLs
+const corsOptions = {
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        const allowedOrigins = [
+            'http://localhost:3030',  // client local
+            'http://localhost:3000',  // admin local
+            'http://your-aws-client-url',  // client production
+            'http://your-aws-admin-url',   // admin production
+        ];
+        
+        // In development, allow all origins
+        if (process.env.NODE_ENV === 'development') {
+            return callback(null, true);
+        }
+        
+        // In production, check against allowed origins
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
     credentials: true
-}));
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
