@@ -102,7 +102,7 @@ export async function getServerSideProps () {
 	try {
 		console.log('Fetching products from admin-server...');
 
-		const response1 = await fetch(`http://localhost:8080/pharma/getPharma`, {
+		const response1 = await fetch(`http://your-ec2-public-ip:8080/pharma/getPharma`, {
 			headers: {
 				'Content-Type': 'application/json'
 			}
